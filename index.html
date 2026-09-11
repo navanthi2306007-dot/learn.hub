@@ -1,0 +1,1141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LearnHub - Course Registration</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:Arial, sans-serif;
+    background:#f6f7fb;
+    color:#172033;
+}
+
+/* NAVBAR */
+.navbar{
+    height:75px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:0 8%;
+    background:white;
+    position:sticky;
+    top:0;
+    z-index:1000;
+    box-shadow:0 2px 15px rgba(0,0,0,.08);
+}
+
+.logo{
+    font-size:28px;
+    font-weight:bold;
+    color:#202b78;
+}
+
+.logo span{
+    color:#6c63ff;
+}
+
+.navbar nav{
+    display:flex;
+    gap:25px;
+}
+
+.navbar a{
+    text-decoration:none;
+    color:#333;
+    font-weight:500;
+}
+
+.navbar a:hover{
+    color:#6c63ff;
+}
+
+.admin-btn{
+    background:#202b78;
+    color:white!important;
+    padding:10px 18px;
+    border-radius:8px;
+}
+
+/* HERO */
+.hero{
+    min-height:560px;
+    display:flex;
+    align-items:center;
+    padding:70px 8%;
+    background:
+    linear-gradient(90deg,rgba(15,22,70,.96),rgba(45,55,140,.70)),
+    url("https://images.unsplash.com/photo-1523240795612-9a054b0db644")
+    center/cover;
+}
+
+.hero-content{
+    max-width:650px;
+    color:white;
+}
+
+.hero-small{
+    color:#b9b5ff;
+    letter-spacing:2px;
+    font-weight:bold;
+    margin-bottom:15px;
+}
+
+.hero h1{
+    font-size:55px;
+    line-height:1.1;
+    margin-bottom:22px;
+}
+
+.hero p{
+    font-size:18px;
+    line-height:1.7;
+    color:#e5e7f5;
+}
+
+.hero-btn{
+    display:inline-block;
+    margin-top:30px;
+    padding:14px 25px;
+    background:#756cff;
+    color:white;
+    text-decoration:none;
+    border-radius:8px;
+    font-weight:bold;
+}
+
+/* COURSES */
+.courses{
+    padding:90px 8%;
+}
+
+.section-title{
+    text-align:center;
+    margin-bottom:50px;
+}
+
+.section-title small{
+    color:#6c63ff;
+    font-weight:bold;
+    letter-spacing:2px;
+}
+
+.section-title h2{
+    font-size:38px;
+    margin:12px 0;
+}
+
+.section-title p{
+    color:#777;
+}
+
+.course-container{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:28px;
+}
+
+.course-card{
+    background:white;
+    border-radius:15px;
+    overflow:hidden;
+    box-shadow:0 8px 25px rgba(0,0,0,.08);
+    transition:.3s;
+}
+
+.course-card:hover{
+    transform:translateY(-7px);
+}
+
+.course-card img{
+    width:100%;
+    height:210px;
+    object-fit:cover;
+    display:block;
+}
+
+.course-content{
+    padding:24px;
+}
+
+.course-content h3{
+    font-size:22px;
+    margin-bottom:10px;
+}
+
+.course-content p{
+    color:#777;
+    line-height:1.6;
+    margin-bottom:20px;
+}
+
+.register{
+    border:0;
+    padding:11px 18px;
+    background:#202b78;
+    color:white;
+    border-radius:7px;
+    cursor:pointer;
+}
+
+/* ABOUT */
+.about{
+    background:#202b78;
+    color:white;
+    padding:80px 8%;
+}
+
+.about h2{
+    font-size:38px;
+    margin:12px 0;
+}
+
+.about p{
+    max-width:700px;
+    line-height:1.8;
+    color:#dfe2ff;
+}
+
+/* FOOTER */
+footer{
+    background:#11162f;
+    color:white;
+    text-align:center;
+    padding:35px;
+}
+
+/* LOGIN */
+.login-screen{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:linear-gradient(135deg,#151b4d,#6c63ff);
+    z-index:5000;
+    align-items:center;
+    justify-content:center;
+}
+
+.login-box{
+    width:380px;
+    max-width:90%;
+    background:white;
+    padding:40px;
+    border-radius:18px;
+    text-align:center;
+    box-shadow:0 20px 50px rgba(0,0,0,.25);
+}
+
+.login-box h2{
+    margin-bottom:8px;
+}
+
+.login-box p{
+    color:#777;
+    margin-bottom:25px;
+}
+
+.login-box input{
+    width:100%;
+    padding:14px;
+    margin-bottom:15px;
+    border:1px solid #ddd;
+    border-radius:8px;
+}
+
+.login-box button{
+    width:100%;
+    padding:14px;
+    border:0;
+    border-radius:8px;
+    background:#202b78;
+    color:white;
+    font-size:16px;
+    cursor:pointer;
+}
+
+.close-login{
+    display:block;
+    margin-top:18px;
+    color:#6c63ff;
+    cursor:pointer;
+}
+
+.error{
+    color:red!important;
+    font-size:14px;
+}
+
+/* ADMIN */
+.admin-panel{
+    display:none;
+    min-height:100vh;
+    background:#f5f6fb;
+}
+
+.admin-header{
+    background:#171d4b;
+    color:white;
+    padding:20px 7%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.logout{
+    padding:10px 18px;
+    border:0;
+    border-radius:7px;
+    cursor:pointer;
+}
+
+.admin-main{
+    width:86%;
+    margin:40px auto;
+}
+
+.admin-title{
+    margin-bottom:30px;
+}
+
+.admin-title small{
+    color:#6c63ff;
+    font-weight:bold;
+    letter-spacing:2px;
+}
+
+.admin-title h1{
+    margin-top:8px;
+}
+
+.admin-card{
+    background:white;
+    padding:25px;
+    margin-bottom:20px;
+    border-radius:14px;
+    display:grid;
+    grid-template-columns:180px 1fr;
+    gap:25px;
+    box-shadow:0 5px 20px rgba(0,0,0,.07);
+}
+
+.admin-card img{
+    width:180px;
+    height:130px;
+    object-fit:cover;
+    border-radius:10px;
+}
+
+.admin-info input,
+.admin-info textarea{
+    width:100%;
+    padding:12px;
+    margin-bottom:12px;
+    border:1px solid #ddd;
+    border-radius:7px;
+}
+
+.admin-info textarea{
+    min-height:75px;
+    resize:vertical;
+}
+
+.admin-actions{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+}
+
+.admin-actions button,
+.upload{
+    padding:10px 15px;
+    border:0;
+    border-radius:7px;
+    cursor:pointer;
+}
+
+.save{
+    background:#202b78;
+    color:white;
+}
+
+.delete{
+    background:#ffe5e5;
+    color:#d00000;
+}
+
+.upload{
+    background:#eee;
+}
+
+.upload input{
+    display:none;
+}
+
+.back-site{
+    margin-top:20px;
+    display:inline-block;
+    color:#6c63ff;
+    cursor:pointer;
+}
+
+/* MOBILE */
+@media(max-width:700px){
+
+    .navbar{
+        padding:0 5%;
+    }
+
+    .navbar nav a:not(.admin-btn){
+        display:none;
+    }
+
+    .hero{
+        min-height:500px;
+        padding:50px 6%;
+    }
+
+    .hero h1{
+        font-size:38px;
+    }
+
+    .courses{
+        padding:60px 5%;
+    }
+
+    .admin-card{
+        grid-template-columns:1fr;
+    }
+
+    .admin-card img{
+        width:100%;
+        height:220px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ================= MAIN WEBSITE ================= -->
+
+<div id="website">
+
+<header class="navbar">
+
+    <div class="logo">
+        Learn<span>Hub</span>
+    </div>
+
+    <nav>
+        <a href="#home">Home</a>
+        <a href="#courses">Courses</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+
+        <a href="#" class="admin-btn"
+           onclick="openLogin()">
+           Admin
+        </a>
+    </nav>
+
+</header>
+
+
+<section class="hero" id="home">
+
+    <div class="hero-content">
+
+        <div class="hero-small">
+            LEARN • GROW • SUCCEED
+        </div>
+
+        <h1>
+            Upgrade Your Skills
+            With The Right Course
+        </h1>
+
+        <p>
+            Explore professional courses designed
+            to help students build practical knowledge
+            and career-ready skills.
+        </p>
+
+        <a href="#courses" class="hero-btn">
+            Explore Courses
+        </a>
+
+    </div>
+
+</section>
+
+
+<section class="courses" id="courses">
+
+    <div class="section-title">
+
+        <small>OUR COURSES</small>
+
+        <h2>
+            Popular Learning Programs
+        </h2>
+
+        <p>
+            Choose a course and start your learning journey.
+        </p>
+
+    </div>
+
+    <div
+        class="course-container"
+        id="courseContainer">
+    </div>
+
+</section>
+
+
+<section class="about" id="about">
+
+    <small>WHY LEARNHUB?</small>
+
+    <h2>
+        Learn Skills That Matter.
+    </h2>
+
+    <p>
+        LearnHub provides practical and beginner-friendly
+        courses to help students develop technical knowledge
+        and professional skills.
+    </p>
+
+</section>
+
+
+<footer id="contact">
+
+    <h3>LearnHub</h3>
+
+    <p>
+        © 2026 LearnHub. All Rights Reserved.
+    </p>
+
+</footer>
+
+</div>
+
+
+<!-- ================= ADMIN LOGIN ================= -->
+
+<div class="login-screen" id="loginScreen">
+
+    <div class="login-box">
+
+        <h2>🔐 Admin Login</h2>
+
+        <p>
+            Login to manage courses
+        </p>
+
+        <input
+            type="text"
+            id="username"
+            placeholder="Username">
+
+        <input
+            type="password"
+            id="password"
+            placeholder="Password">
+
+        <button onclick="login()">
+            Login
+        </button>
+
+        <p
+            class="error"
+            id="loginError">
+        </p>
+
+        <span
+            class="close-login"
+            onclick="closeLogin()">
+            ← Back to Website
+        </span>
+
+    </div>
+
+</div>
+
+
+<!-- ================= ADMIN DASHBOARD ================= -->
+
+<div
+    class="admin-panel"
+    id="adminPanel">
+
+    <div class="admin-header">
+
+        <div>
+            <h2>LearnHub Admin</h2>
+            <small>
+                Course Management Dashboard
+            </small>
+        </div>
+
+        <button
+            class="logout"
+            onclick="logout()">
+            Logout
+        </button>
+
+    </div>
+
+
+    <div class="admin-main">
+
+        <div class="admin-title">
+
+            <small>
+                ADMIN DASHBOARD
+            </small>
+
+            <h1>
+                Manage Courses
+            </h1>
+
+        </div>
+
+        <div id="adminCourses"></div>
+
+        <span
+            class="back-site"
+            onclick="backToWebsite()">
+            ← Back to Website
+        </span>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* ==========================================
+   DEFAULT 5 COURSES
+========================================== */
+
+const defaultCourses = [
+
+{
+id:1,
+name:"Web Development",
+description:
+"Learn HTML, CSS and JavaScript to build modern websites.",
+image:
+"https://images.unsplash.com/photo-1498050108023-c5249f4df085"
+},
+
+{
+id:2,
+name:"Python Programming",
+description:
+"Learn Python programming from basics to practical projects.",
+image:
+"https://images.unsplash.com/photo-1526379095098-d400fd0bf935"
+},
+
+{
+id:3,
+name:"Cloud Computing",
+description:
+"Understand AWS, cloud infrastructure and deployment.",
+image:
+"https://images.unsplash.com/photo-1451187580459-43490279c0fa"
+},
+
+{
+id:4,
+name:"Data Science",
+description:
+"Learn data analysis, visualization and machine learning basics.",
+image:
+"https://images.unsplash.com/photo-1551288049-bebda4e38f71"
+},
+
+{
+id:5,
+name:"UI/UX Design",
+description:
+"Design beautiful and user-friendly digital experiences.",
+image:
+"https://images.unsplash.com/photo-1561070791-2526d30994b5"
+}
+
+];
+
+
+/* ==========================================
+   GET COURSES
+========================================== */
+
+function getCourses(){
+
+    let saved =
+        localStorage.getItem("learnHubCourses");
+
+    if(saved){
+
+        return JSON.parse(saved);
+
+    }
+
+    localStorage.setItem(
+        "learnHubCourses",
+        JSON.stringify(defaultCourses)
+    );
+
+    return defaultCourses;
+}
+
+
+/* ==========================================
+   DISPLAY COURSES
+========================================== */
+
+function displayCourses(){
+
+    const container =
+        document.getElementById(
+            "courseContainer"
+        );
+
+    container.innerHTML = "";
+
+    const courses =
+        getCourses();
+
+
+    courses.forEach(course => {
+
+        const card =
+            document.createElement("div");
+
+        card.className =
+            "course-card";
+
+
+        card.innerHTML = `
+
+            <img
+                src="${course.image}"
+                alt="${course.name}"
+                onerror="
+                this.src='https://via.placeholder.com/600x400?text=Course+Image'
+                ">
+
+            <div class="course-content">
+
+                <h3>
+                    ${course.name}
+                </h3>
+
+                <p>
+                    ${course.description}
+                </p>
+
+                <button
+                    class="register"
+                    onclick="
+                    registerCourse('${course.name}')
+                    ">
+
+                    Register Now
+
+                </button>
+
+            </div>
+
+        `;
+
+
+        container.appendChild(card);
+
+    });
+
+}
+
+
+/* ==========================================
+   REGISTRATION
+========================================== */
+
+function registerCourse(course){
+
+    alert(
+        "Registration selected for: " +
+        course
+    );
+
+}
+
+
+/* ==========================================
+   LOGIN
+========================================== */
+
+function openLogin(){
+
+    document.getElementById(
+        "loginScreen"
+    ).style.display = "flex";
+
+}
+
+
+function closeLogin(){
+
+    document.getElementById(
+        "loginScreen"
+    ).style.display = "none";
+
+}
+
+
+function login(){
+
+    const username =
+        document.getElementById(
+            "username"
+        ).value;
+
+    const password =
+        document.getElementById(
+            "password"
+        ).value;
+
+
+    if(
+        username === "admin" &&
+        password === "admin123"
+    ){
+
+        document.getElementById(
+            "website"
+        ).style.display = "none";
+
+        document.getElementById(
+            "loginScreen"
+        ).style.display = "none";
+
+        document.getElementById(
+            "adminPanel"
+        ).style.display = "block";
+
+        loadAdminCourses();
+
+    }
+    else{
+
+        document.getElementById(
+            "loginError"
+        ).innerText =
+        "Invalid username or password.";
+
+    }
+
+}
+
+
+/* ==========================================
+   ADMIN COURSE DISPLAY
+========================================== */
+
+function loadAdminCourses(){
+
+    const container =
+        document.getElementById(
+            "adminCourses"
+        );
+
+    container.innerHTML = "";
+
+
+    const courses =
+        getCourses();
+
+
+    courses.forEach(course => {
+
+        const card =
+            document.createElement("div");
+
+        card.className =
+            "admin-card";
+
+
+        card.innerHTML = `
+
+            <img
+                id="preview-${course.id}"
+                src="${course.image}"
+                onerror="
+                this.src='https://via.placeholder.com/600x400?text=No+Image'
+                ">
+
+
+            <div class="admin-info">
+
+                <input
+                    id="name-${course.id}"
+                    value="${course.name}"
+                    placeholder="Course Name">
+
+
+                <textarea
+                    id="description-${course.id}"
+                    placeholder="Course Description">${course.description}</textarea>
+
+
+                <div class="admin-actions">
+
+
+                    <label class="upload">
+
+                        📷 Change Image
+
+                        <input
+                            type="file"
+                            accept="image/*"
+                            onchange="
+                            changeImage(event,${course.id})
+                            ">
+
+                    </label>
+
+
+                    <button
+                        class="save"
+                        onclick="
+                        saveCourse(${course.id})
+                        ">
+
+                        💾 Save Changes
+
+                    </button>
+
+
+                    <button
+                        class="delete"
+                        onclick="
+                        deleteCourse(${course.id})
+                        ">
+
+                        🗑 Delete
+
+                    </button>
+
+
+                </div>
+
+            </div>
+
+        `;
+
+
+        container.appendChild(card);
+
+    });
+
+}
+
+
+/* ==========================================
+   CHANGE IMAGE
+========================================== */
+
+function changeImage(event,id){
+
+    const file =
+        event.target.files[0];
+
+    if(!file)
+        return;
+
+
+    if(!file.type.startsWith("image/")){
+
+        alert(
+            "Please select an image file."
+        );
+
+        return;
+
+    }
+
+
+    const reader =
+        new FileReader();
+
+
+    reader.onload = function(e){
+
+        const image =
+            e.target.result;
+
+
+        document.getElementById(
+            "preview-" + id
+        ).src = image;
+
+
+        let courses =
+            getCourses();
+
+
+        const course =
+            courses.find(
+                c => c.id === id
+            );
+
+
+        course.image =
+            image;
+
+
+        localStorage.setItem(
+            "learnHubCourses",
+            JSON.stringify(courses)
+        );
+
+    };
+
+
+    reader.readAsDataURL(file);
+
+}
+
+
+/* ==========================================
+   SAVE COURSE
+========================================== */
+
+function saveCourse(id){
+
+    let courses =
+        getCourses();
+
+
+    const course =
+        courses.find(
+            c => c.id === id
+        );
+
+
+    course.name =
+        document.getElementById(
+            "name-" + id
+        ).value;
+
+
+    course.description =
+        document.getElementById(
+            "description-" + id
+        ).value;
+
+
+    localStorage.setItem(
+        "learnHubCourses",
+        JSON.stringify(courses)
+    );
+
+
+    alert(
+        "Course updated successfully!"
+    );
+
+
+}
+
+
+/* ==========================================
+   DELETE COURSE
+========================================== */
+
+function deleteCourse(id){
+
+    const confirmDelete =
+        confirm(
+            "Are you sure you want to delete this course?"
+        );
+
+
+    if(!confirmDelete)
+        return;
+
+
+    let courses =
+        getCourses();
+
+
+    courses =
+        courses.filter(
+            course => course.id !== id
+        );
+
+
+    localStorage.setItem(
+        "learnHubCourses",
+        JSON.stringify(courses)
+    );
+
+
+    loadAdminCourses();
+
+}
+
+
+/* ==========================================
+   LOGOUT
+========================================== */
+
+function logout(){
+
+    document.getElementById(
+        "adminPanel"
+    ).style.display = "none";
+
+
+    document.getElementById(
+        "website"
+    ).style.display = "block";
+
+
+    displayCourses();
+
+}
+
+
+function backToWebsite(){
+
+    logout();
+
+}
+
+
+/* START WEBSITE */
+
+displayCourses();
+
+</script>
+
+</body>
+</html>
